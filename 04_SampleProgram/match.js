@@ -1,16 +1,16 @@
 // MATCH.JS
-// Shows 8 buttons. You click one. Now, you try and find a match in 
+// Shows 8 buttons. You click one. Now, you try and find a match in
 // one of the remaining buttons. Like memory match.
 //
 //
 // Note Match here is an object that consists of several objects.
 //   Model: stores data
-//   View: used for display 
+//   View: used for display
 //   Controller: decides what happens on key clicks
 //
 //   The run method is called FIRST.  It sets up everything by calling
 //   helper functions.
-//   First, it sets button values by calling assignButtonValues 
+//   First, it sets button values by calling assignButonValues
 //   Next, it attaches button onclick handlers by calling attachHandlers
 //   Next, it uses displayAll to return html to be displayed on browser
 //
@@ -18,7 +18,7 @@
 var Match = {
 
 Model : {
-  oldVal : undefined
+
 },
 
 
@@ -124,6 +124,3 @@ attachHandlers : function() {
 
 
 } // end of Match;
-
-
-

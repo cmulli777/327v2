@@ -7,6 +7,10 @@
 var Calc = {
 
 Model : {
+  firstval : undefined,
+  secondval : undefined,
+  result : undefined,
+  operation : undefined
 },
 
 
@@ -40,8 +44,34 @@ View : {
 
 },
 
-Controller : {
+Controller: {
+buttonHandler : function(that) {
+ if (Calc.Model.firstval == undefined) {
+   if(!isNaN(parseFloat(that.value)) || that.value == "."){
+     Calc.Model.firstval = that.value;
+     textRow.value = Calc.Model.firstval;
+   }
+ }
+ else if(Calc.Model.firstval != undefined && Calc.Model.operation == undefined){
+   if((!isNaN(parseFloat(that.value))) || that.value == "."){
+     Calc.Model.firstval += that.value;
+     textRow.value = Calc.Model.firstval;
+   }
+ }
+ else if(Calc.Model.firstval != undefined && Calc.Model.operation != undefined && Calc.Model.secondval == undefined){
+   if(!isNaN(parseFloat(that.value)) || that.value == "."){
+     Calc.Model.secondval = that.value;
+     textRow.value = Calc.Model.firstval + Calc.Model.operation + Calc.Model.secondval;
+   }
+ }
+ else if(Calc.Model.firstval != undefined && Calc.Model.operation != undefined && Calc.Model.secondval != undefined && Calc.Model.result == undefined){
+   if(!isNaN(parseFloat(that.value)) || that.value == "."){
+     Calc.Model.secondval += that.value;
+     textRow.value = Calc.Model.firstval + Calc.Model.operation + Calc.Model.secondval;
+   }
+ }
 
+}
 },
 
 run : function() {
@@ -117,11 +147,73 @@ display : function() {
 },
 
 attachHandlers : function() {
-  Calc.View.button7.onclick = "Calc.button7Handler()";
+  for (var i = 0; i <= 9; i++) {
+    Calc.View["button" + i].onclick ="Calc.Controller.buttonHandler(this)";
+  }
+  Calc.View.buttonplus.onclick = "Calc.buttonplusHandler()";
+  Calc.View.buttonminus.onclick = "Calc.buttonminusHandler()";
+  Calc.View.buttonmult.onclick = "Calc.buttonmultHandler()";
+  Calc.View.buttondiv.onclick = "Calc.buttondivHandler()";
+  Calc.View.buttoneq.onclick = "Calc.buttoneqHandler()";
+  Calc.View.buttonC.onclick = "Calc.buttonCHandler()";
+
 },
 
-button7Handler : function() {
-  alert("Hi");
-}
+buttonplusHandler : function() {
+  if(Calc.Model.firstval != undefined && Calc.Model.secondval == undefined){
+    Calc.Model.operation = buttonplus.value;
+    textRow.value = Calc.Model.firstval + Calc.Model.operation;
+  }
+},
+buttonminusHandler : function() {
+  if(Calc.Model.firstval != undefined && Calc.Model.secondval == undefined){
+    Calc.Model.operation = buttonminus.value;
+    textRow.value = Calc.Model.firstval + Calc.Model.operation;
+  }
+},
+buttonmultHandler : function() {
+  if(Calc.Model.firstval != undefined && Calc.Model.secondval == undefined){
+    Calc.Model.operation = buttonmult.value;
+    textRow.value = Calc.Model.firstval + Calc.Model.operation;
+  }
+},
+buttondivHandler : function() {
+  if(Calc.Model.firstval != undefined && Calc.Model.secondval == undefined){
+    Calc.Model.operation = buttondiv.value;
+    textRow.value = Calc.Model.firstval + Calc.Model.operation;
+  }
+},
+buttonCHandler : function() {
+  Calc.Model.firstval = undefined;
+  Calc.Model.secondval = undefined;
+  Calc.Model.operation = undefined;
+  Calc.Model.result = undefined;
+  textRow.value = "";
+},
+buttoneqHandler : function() {
+  if(Calc.Model.secondval != undefined){
+    var val1 = parseInt(Calc.Model.firstval);
+    var val2 = parseInt(Calc.Model.secondval);
+
+    switch (Calc.Model.operation) {
+      case "+":
+        Calc.Model.result = val1+val2
+        break;
+    case "-":
+      Calc.Model.result = val1-val2
+      break;
+    case "*":
+      Calc.Model.result = val1*val2
+      break;
+    case "/":
+      Calc.Model.result = val1/val2
+        break;
+      default:
+    }
+
+    textRow.value = Calc.Model.firstval + Calc.Model.operation + Calc.Model.secondval + "=" + Calc.Model.result;
+  }
+},
+
 
 } // end of Calc;
